@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using LegalContract.Application.Commands;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LegalContract.Controllers
@@ -67,7 +68,12 @@ namespace LegalContract.Controllers
         {
             try
             {
-                await _mediator.Send(id);
+                var legalContract = new DeleteLegalContractCommand
+                {
+                    Id = id
+                };
+
+                await _mediator.Send(legalContract);
 
                 return Ok();
             }

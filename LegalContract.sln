@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegalContract.Domain", "Leg
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegalContract.Application", "LegalContract.Application\LegalContract.Application.csproj", "{A3A316EC-5485-475F-AB54-C6D95E5273AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegalContract.Infrastructure", "LegalContract.Infrastructure\LegalContract.Infrastructure.csproj", "{A82FD98B-4782-46C2-B366-E6BE4B6A084E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegalContract.Persistence", "LegalContract.Infrastructure\LegalContract.Persistence.csproj", "{A82FD98B-4782-46C2-B366-E6BE4B6A084E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegalContract.Tests", "LegalContract.Tests\LegalContract.Tests.csproj", "{56F0D303-1EE8-4504-B13F-1E0131F6F006}"
 EndProject
