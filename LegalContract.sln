@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegalContract.Application",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegalContract.Infrastructure", "LegalContract.Infrastructure\LegalContract.Infrastructure.csproj", "{A82FD98B-4782-46C2-B366-E6BE4B6A084E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegalContract.Tests", "LegalContract.Tests\LegalContract.Tests.csproj", "{56F0D303-1EE8-4504-B13F-1E0131F6F006}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{A82FD98B-4782-46C2-B366-E6BE4B6A084E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A82FD98B-4782-46C2-B366-E6BE4B6A084E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A82FD98B-4782-46C2-B366-E6BE4B6A084E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56F0D303-1EE8-4504-B13F-1E0131F6F006}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56F0D303-1EE8-4504-B13F-1E0131F6F006}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56F0D303-1EE8-4504-B13F-1E0131F6F006}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56F0D303-1EE8-4504-B13F-1E0131F6F006}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
