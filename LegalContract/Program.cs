@@ -1,9 +1,13 @@
 using LegalContract.Application.Commands;
+using LegalContract.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateLegalContractCommandHandler).Assembly));
+
+builder.Services.AddDbContext<LegalContractDbContext>(options => options.UseInMemoryDatabase("Database"));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -1,4 +1,5 @@
 ﻿using LegalContract.Application.Commands;
+using LegalContract.Application.Models;
 using LegalContract.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -21,9 +22,9 @@ namespace LegalContract.Controllers
 
             try
             {
-                await _mediator.Send(new GetAllLegalContractsQuery());
+                var legalContracts = await _mediator.Send(new GetAllLegalContractsQuery());
 
-                return Ok();
+                return Ok(legalContracts);
             }
             catch (Exception)
             {
@@ -33,11 +34,16 @@ namespace LegalContract.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateLegalContract()
+        public async Task<IActionResult> CreateLegalContract(CreateLegalContractRequest request)
         {
             try
             {
-                var legalContract = new CreateLegalContractCommand();
+                var legalContract = new CreateLegalContractCommand
+                {
+                    Author = request.Author,
+                    Description = request.Description,
+                    EntityName = request.EntityName
+                };
 
                 await _mediator.Send(legalContract);
 
@@ -51,11 +57,17 @@ namespace LegalContract.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateLegalContract()
+        public async Task<IActionResult> UpdateLegalContract(UpdateLegalContractRequest request)
         {
             try
             {
-                var legalContract = new UpdateLegalContractCommand();
+                var legalContract = new UpdateLegalContractCommand
+                {
+                    Id = request.Id,
+                    Author = request.Author,
+                    Description = request.Description,
+                    EntityName = request.EntityName
+                };
 
                 await _mediator.Send(legalContract);
 
@@ -69,7 +81,7 @@ namespace LegalContract.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteLegalContract(string id)
+        public async Task<IActionResult> DeleteLegalContract(int id)
         {
             try
             {

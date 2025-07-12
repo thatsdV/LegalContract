@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LegalContract.Domain\LegalContract.Domain.csproj" />
+    <ProjectReference Include="..\LegalContract.Infrastructure\LegalContract.Persistence.csproj" />
   </ItemGroup>
 
 </Project>
