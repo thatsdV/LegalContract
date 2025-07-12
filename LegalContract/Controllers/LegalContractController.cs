@@ -1,4 +1,5 @@
 ﻿using LegalContract.Application.Commands;
+using LegalContract.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,7 +21,7 @@ namespace LegalContract.Controllers
 
             try
             {
-                await _mediator.Send();
+                await _mediator.Send(new GetAllLegalContractsQuery());
 
                 return Ok();
             }
@@ -36,7 +37,9 @@ namespace LegalContract.Controllers
         {
             try
             {
-                await _mediator.Send();
+                var legalContract = new CreateLegalContractCommand();
+
+                await _mediator.Send(legalContract);
 
                 return Ok();
             }
@@ -52,7 +55,9 @@ namespace LegalContract.Controllers
         {
             try
             {
-                await _mediator.Send();
+                var legalContract = new UpdateLegalContractCommand();
+
+                await _mediator.Send(legalContract);
 
                 return Ok();
             }

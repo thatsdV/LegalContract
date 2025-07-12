@@ -12,6 +12,7 @@ namespace LegalContract.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Domain.Entities.LegalContract>().HasKey(m => m.Id);
             base.OnModelCreating(modelBuilder);
         }
     }
