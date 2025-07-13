@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/Home.vue'
-import ContractDetail from '@/views/ContractDetail.vue'
+import Contracts from '@/views/Contracts.vue'
 
 export default createRouter({
   history: createWebHistory(),
@@ -10,10 +10,8 @@ export default createRouter({
       component: Home,
     },
     {
-      path: '/contract/:id',
-      name: 'ContractDetail',
-      component: ContractDetail,
-      props: true,
+      path: '/contracts',
+      component: Contracts,
     },
   ],
 })

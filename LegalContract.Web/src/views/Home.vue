@@ -3,14 +3,13 @@
     <h1>Welcome to the Legal Contracts App</h1>
     <p>This application allows you to create, edit, view, and delete legal contracts.</p>
     <router-link to="/contracts">View Contracts</router-link>
-    <router-link to="/create-contract">Create a New Contract</router-link>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'Home',
-};
+}
 </script>
 
 <style scoped>
