@@ -10,26 +10,36 @@ namespace LegalContract.Persistence
         {
         }
 
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var entries = ChangeTracker
+                .Entries()
+                .Where(e => e.Entity is Domain.Entities.Contract && (
+                        e.State == EntityState.Added
+                        || e.State == EntityState.Modified));
+
+            foreach (var entityEntry in entries)
+            {
+                if (entityEntry.State == EntityState.Modified)
+                {
+                    ((Domain.Entities.Contract)entityEntry.Entity).UpdateDate = DateTime.Now;
+                }
+
+                if (entityEntry.State == EntityState.Added)
+                {
+                    ((Domain.Entities.Contract)entityEntry.Entity).CreationDate = DateTime.Now;
+                }
+            }
+
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Domain.Entities.Contract>(entity =>
             {
                 entity.HasKey(e => e.Id);
-                entity.Property(e => e.CreationDate).ValueGeneratedOnAdd();
-                entity.Property(e => e.UpdateDate).ValueGeneratedOnUpdate();
             });
-
-            modelBuilder.Entity<Domain.Entities.Contract>().HasData(
-                new Domain.Entities.Contract
-                {
-                    Id = 1,
-                    Author = "Tom John",
-                    EntityName = "Bank",
-                    Description = "This is the description for the first legal contract ever made",
-                    CreationDate = DateTime.Now,
-                    UpdateDate = null
-                }
-                );
 
             base.OnModelCreating(modelBuilder);
         }
