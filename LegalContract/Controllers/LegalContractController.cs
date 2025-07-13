@@ -28,7 +28,6 @@ namespace LegalContract.Controllers
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -51,7 +50,6 @@ namespace LegalContract.Controllers
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -75,7 +73,6 @@ namespace LegalContract.Controllers
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -96,7 +93,6 @@ namespace LegalContract.Controllers
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
