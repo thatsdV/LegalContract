@@ -20,29 +20,30 @@
 
 <script lang="ts">
 import { defineComponent, type PropType, reactive } from 'vue'
-
-interface Contract {
-  id: number
-  author: string
-  entityName: string
-  description: string
-  creationDate: string
-  updateDate: string
-}
+import type { Contract } from '../types'
 
 export default defineComponent({
   name: 'ContractForm',
   props: {
     contract: {
-      type: Object as PropType<Contract>,
-      required: true,
+      type: Object as PropType<Contract | null | undefined>,
+      required: false,
+    },
+    isCreate: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   setup(props, { emit }) {
     const form = reactive({ ...props.contract })
 
     const submitForm = () => {
-      emit('save', { ...form })
+      if (props.isCreate) {
+        emit('create', { ...form })
+      } else {
+        emit('save', { ...form })
+      }
     }
 
     return { form, submitForm }

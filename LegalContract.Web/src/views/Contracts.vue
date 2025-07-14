@@ -1,8 +1,14 @@
 <template>
   <div class="home">
     <h2>Contracts</h2>
-    <div v-if="editingContract">
-      <ContractForm :contract="editingContract" @save="saveEdit" @cancel="cancelEdit" />
+    <div v-if="editingContract || isContractCreation">
+      <ContractForm
+        :contract="editingContract"
+        @save="saveEdit"
+        @cancel="cancelEdit"
+        @create="createContract"
+        :isCreate="isContractCreation"
+      />
     </div>
     <ul v-else>
       <li v-for="contract in contracts" :key="contract.id">
@@ -11,26 +17,23 @@
         Description: {{ contract.description }}<br />
         Creation Date: {{ contract.creationDate }}<br />
         Update Date: {{ contract.updateDate }}<br />
-        <button @click="editContract(contract.id)">Edit</button>
-        <button @click="deleteContract(contract.id)">Delete</button>
+        <div class="item-actions">
+          <button @click="editContract(contract.id)">Edit</button>
+          <button @click="deleteContract(contract.id)">Delete</button>
+        </div>
       </li>
     </ul>
-    <router-link to="/">Home</router-link>
+    <div v-if="!(editingContract || isContractCreation)" class="actions">
+      <button @click="$router.push('/')">Back</button>
+      <button type="button" @click="onCreateClickHandler">Create new contract</button>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from 'vue'
 import ContractForm from '@/components/ContractForm.vue'
-
-interface Contract {
-  id: number
-  author: string
-  entityName: string
-  description: string
-  creationDate: string
-  updateDate: string
-}
+import type { Contract } from '../types'
 
 export default defineComponent({
   name: 'Contracts',
@@ -38,6 +41,7 @@ export default defineComponent({
   setup() {
     const contracts = ref<Contract[]>([])
     const editingContract = ref<Contract | null>(null)
+    const isContractCreation = ref(false)
 
     onMounted(async () => {
       try {
@@ -45,13 +49,17 @@ export default defineComponent({
         if (!response.ok) throw new Error('Network response was not ok')
         contracts.value = await response.json()
       } catch (error) {
-        console.error('Error fetching contracts:', error)
+        console.error('Failed to retrieve contracts', error)
       }
     })
 
     const editContract = (id: number) => {
       const contract = contracts.value.find((c) => c.id === id) || null
       editingContract.value = contract
+    }
+
+    const onCreateClickHandler = () => {
+      isContractCreation.value = true
     }
 
     const saveEdit = async (updated: Contract) => {
@@ -73,11 +81,30 @@ export default defineComponent({
 
     const cancelEdit = () => {
       editingContract.value = null
+      isContractCreation.value = false
+    }
+
+    const createContract = async (newContract: Contract) => {
+      try {
+        const response = await fetch('https://localhost:7171/api/LegalContract', {
+          method: 'POST',
+          body: JSON.stringify(newContract),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        if (!response.ok) throw new Error('Network response was not ok')
+        isContractCreation.value = false
+        location.reload()
+      } catch (error) {
+        console.error('Error creating contract:', error)
+      }
     }
 
     const deleteContract = async (id: number) => {
       try {
-        const response = await fetch('https://localhost:7171/api/LegalContract?id=' + id, {
+        if (!confirm('Are you sure you want to delete this contract?')) return
+        const response = await fetch(`https://localhost:7171/api/LegalContract?id=${id}`, {
           method: 'DELETE',
         })
         if (!response.ok) throw new Error('Network response was not ok')
@@ -88,7 +115,17 @@ export default defineComponent({
       }
     }
 
-    return { contracts, editContract, deleteContract, editingContract, saveEdit, cancelEdit }
+    return {
+      contracts,
+      editContract,
+      deleteContract,
+      editingContract,
+      saveEdit,
+      cancelEdit,
+      isContractCreation,
+      onCreateClickHandler,
+      createContract,
+    }
   },
 })
 </script>
@@ -97,5 +134,37 @@ export default defineComponent({
 .home {
   text-align: center;
   margin-top: 50px;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+ul {
+  margin-top: 50px;
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  text-align: center;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.item-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 1rem;
+
+  justify-content: center;
 }
 </style>
